@@ -1,0 +1,9 @@
+<header>
+  <nav>
+     <% pages.forEach((page) => { %>
+        <a href="<%= page.path %>"><%= page.name %></a>
+    <% }); %>
+    <a href="/falsy">Falsy</a>
+  </nav>
+</header>
+<hr>
