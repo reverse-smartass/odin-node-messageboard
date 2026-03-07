@@ -1,21 +1,34 @@
 import express from "express";
 import path from "path";
 const app = express();
-import messages from "./db.js";
+import getConnection from "./db.js";
 
 const port = process.env.PORT || 3000;
 const pages = [
   { name: "Home", path: "/" },
-  { name: "New Message", path: "/new" }
+  { name: "New Message", path: "/new" },
 ];
 
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "src/views"));
-app.use(express.static(path.join(process.cwd(),"public")));
+app.use(express.static(path.join(process.cwd(), "public")));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.render("homepage", { pages , messages });
+app.get("/", async (req, res) => {
+    const client = getConnection();
+
+  try {
+    console.log(client);
+    await client.connect();
+    const result = await client.query(
+      "SELECT * FROM messages ORDER BY created_at DESC",
+    );
+
+    res.render("homepage", { pages, messages: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Database Error");
+  }
 });
 
 app.get("/new", (req, res) => {
@@ -29,7 +42,6 @@ app.post("/new", (req, res) => {
   }
   res.redirect("/");
 });
-   
 
 app.use((req, res) => {
   res.status(404).render("404", { title: "Page Not Found", pages });

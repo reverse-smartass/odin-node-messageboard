@@ -11,7 +11,7 @@
     <h1>Message List</h1>
     <ul>
         <% messages.forEach(message => { %>
-            <li><strong><%= message.user %>:</strong> <%= message.text %> <em>(<%= message.added.toLocaleString() %>)</em></li>
+            <li><strong><%= message.username %>:</strong> <%= message.msg %> <em>(<%= message.created_at.toLocaleString() %>)</em></li>
         <% }) %>
     </ul>
     <%- include('partials/footer', { pages }) %>
