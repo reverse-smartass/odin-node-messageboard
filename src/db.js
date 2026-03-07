@@ -1,11 +1,9 @@
-import pg from 'pg';
-const { Client } = pg;
+import  { Pool } from 'pg';
+
 
 // Use a connection string (common on platforms like Render/Heroku)
 // OR use an object with individual credentials
-const getConnection = () => {
-  console.log("Creating new database connection... " + process.env.DB_URL);
-  return new Client({
+const pool =  new Pool({
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -15,7 +13,7 @@ const getConnection = () => {
       rejectUnauthorized: false 
     }
   });
-};
 
-export default getConnection;
+
+export default pool;
 

@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 const app = express();
-import getConnection from "./db.js";
+import pool from "./db.js";
 
 const port = process.env.PORT || 3000;
 const pages = [
@@ -15,12 +15,10 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
-    const client = getConnection();
 
   try {
-    console.log(client);
-    await client.connect();
-    const result = await client.query(
+    console.log(pool);
+    const result = await pool.query(
       "SELECT * FROM messages ORDER BY created_at DESC",
     );
 
@@ -39,20 +37,21 @@ app.post("/new", async (req, res) => {
   const { text, user } = req.body;
   if (text && user) {
     try {
-    const client = getConnection();
-    await client.connect();
-    const result = await client.query(
-      "insert into messages (msg, username) values ($1, $2) returning *",
-      [text, user]
-    );
+      
+      await pool.query(
+        "insert into messages (msg, username) values ($1, $2) returning *",
+        [text, user],
+      );
+      res.redirect("/");
 
-    res.render("homepage", { pages, messages: result.rows });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Database Error");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Database Error");
+    }
+  } else {
+    return res.status(400).send("Both text and user are required.");
   }
-  }
-  res.redirect("/");
+  
 });
 
 app.use((req, res) => {
