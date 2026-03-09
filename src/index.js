@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import userRouter from "./router";
+import userRouter from "./router.js";
 const app = express();
 import { body, validationResult } from "express-validator";
 

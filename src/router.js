@@ -1,12 +1,12 @@
 import { Router } from 'express';
 const userRouter = Router();
-import { getAllMessages, postNewMessage, formPage } from './controller';
+import { getAllMessages, postNewMessage, formPage } from './controller.js';
 
-app.get("/", getAllMessages);
+userRouter.get("/", getAllMessages);
 
-app.get("/new", formPage);
+userRouter.get("/new", formPage);
 
-app.post("/new", postNewMessage);
+userRouter.post("/new", postNewMessage);
 
 
 export default userRouter;
