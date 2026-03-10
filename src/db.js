@@ -1,17 +1,14 @@
 import  { Pool } from 'pg';
+import 'dotenv/config';
+console.log("Password type:", typeof process.env.DB_PASSWORD);
+console.log("Password value exists:", !!process.env.DB_PASSWORD);
 
-
-// Use a connection string (common on platforms like Render/Heroku)
-// OR use an object with individual credentials
 const pool =  new Pool({
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST_INTERNAL || process.env.DB_HOST,
+    database: process.env.DB_INVENTORY_DATABASE,
+    user: process.env.DB_LOCAL_USER,
+    password: process.env.DB_LOCAL_PASSWORD,
+    host: process.env.DB_LOCAL_HOST,
     port: process.env.DB_PORT,
-    ssl: {
-      rejectUnauthorized: false 
-    }
   });
 
 
