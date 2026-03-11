@@ -8,9 +8,22 @@ const pages = [
 export const getAllMessages = async (req, res) => {
 
   try {
-    console.log(pool);
     const result = await pool.query(
       "SELECT * FROM messages ORDER BY created_at DESC",
+    );
+
+    res.render("homepage", { pages, messages: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Database Error");
+  }
+};
+
+export const getAllCategories = async (req, res) => {
+
+  try {
+    const categories = await pool.query(
+      "SELECT distinct category FROM inventory ORDER BY category asc",
     );
 
     res.render("homepage", { pages, messages: result.rows });
