@@ -5,14 +5,16 @@ const pages = [
   { name: "New Message", path: "/new" },
 ];
 
-export const getAllMessages = async (req, res) => {
+export const getAllItemsAndCategories = async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT * FROM messages ORDER BY created_at DESC",
+      "SELECT * FROM inventory",
     );
 
-    res.render("homepage", { pages, messages: result.rows });
+    const categories = await getAllCategories();
+
+    res.render("homepage", { pages, items: result.rows , categories});
   } catch (err) {
     console.error(err);
     res.status(500).send("Database Error");
@@ -26,7 +28,7 @@ export const getAllCategories = async (req, res) => {
       "SELECT distinct category FROM inventory ORDER BY category asc",
     );
 
-    res.render("homepage", { pages, messages: result.rows });
+    return categories.rows;
   } catch (err) {
     console.error(err);
     res.status(500).send("Database Error");
