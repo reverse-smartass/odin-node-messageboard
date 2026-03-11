@@ -1,12 +1,13 @@
 import { Router } from 'express';
 const userRouter = Router();
-import { getAllMessages, postNewMessage, formPage } from './controller.js';
+import { getAllItemsAndCategories, postNewMessage, formPage, deleteItem } from './controller.js';
 
-userRouter.get("/", getAllMessages);
+userRouter.get("/", getAllItemsAndCategories);
 
 userRouter.get("/new", formPage);
 
 userRouter.post("/new", postNewMessage);
 
+userRouter.delete("/delete/:id", deleteItem)
 
 export default userRouter;

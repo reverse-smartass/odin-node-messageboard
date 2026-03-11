@@ -41,9 +41,9 @@ async function runSeed() {
       .join(", ");
 
     //console.log(columnDefs);
-    //console.log(columnFlat);
+    console.log(columnFlat);
 
-    await pool.query(`CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefs})`);
+    /* await pool.query(`CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefs})`);
 
     // 4. Insert data
     for (const item of data) {
@@ -63,7 +63,7 @@ async function runSeed() {
 
       //console.log(sql, values);
       await pool.query(sql, values);
-    }
+    } */
   } catch (err) {
     console.error("Error seeding data:", err);
   } finally {

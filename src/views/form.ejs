@@ -11,12 +11,24 @@
     <h1>New Message</h1>
     <form method="POST" action="/new">
         <div>
-            <label for="user">User:</label>
-            <input type="text" id="user" name="user" required>
+            <label for="title">Product Title:</label>
+            <input type="text" id="title" name="title" required>
         </div>
         <div>
-            <label for="text">Message:</label>
-            <textarea id="text" name="text" required></textarea>
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="description">Product Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+        </div>
+        <div>
+            <label for="image">Image:</label>
+            <input type="text" id="image" name="image" required>
         </div>
         <button type="submit">Send Message</button>
     </form>
