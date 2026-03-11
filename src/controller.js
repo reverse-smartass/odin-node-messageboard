@@ -8,7 +8,6 @@ const pages = [
 export const getAllMessages = async (req, res) => {
 
   try {
-    console.log(pool);
     const result = await pool.query(
       "SELECT * FROM messages ORDER BY created_at DESC",
     );
@@ -42,4 +41,21 @@ export const postNewMessage = async (req, res) => {
   } else {
     return res.status(400).send("Both text and user are required.");
   }
+}
+
+export const deleteMessage = async (req, res) => {
+
+  try {
+    const {id} = req.params;
+    const result = await pool.query('DELETE FROM messages where id = $1', [id]);
+
+    if (result.rowCount === 0){
+      return res.status(400).send('Item not found');
+    }
+
+    return res.status(200).send('Item deleted');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+
 }

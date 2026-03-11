@@ -1,5 +1,5 @@
 import  { Pool } from 'pg';
-
+import 'dotenv/config';
 
 // Use a connection string (common on platforms like Render/Heroku)
 // OR use an object with individual credentials

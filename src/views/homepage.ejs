@@ -11,9 +11,24 @@
     <h1>Message List</h1>
     <ul>
         <% messages.forEach(message => { %>
-            <li><strong><%= message.username %>:</strong> <%= message.msg %> <em>(<%= message.created_at.toLocaleString() %>)</em></li>
+            <li><strong><%= message.username %>:</strong> <%= message.msg %> <em>(<%= message.created_at.toLocaleString() %>)</em> <button onclick="deleteItem('<%= message.id %>')">x</button> </li>
         <% }) %>
     </ul>
     <%- include('partials/footer', { pages }) %>
+
+    <script>
+        async function deleteItem(id){
+            if(!confirm("Delete this message?")) return;
+
+            const response = await fetch(`/delete/${id}`, {
+                method:'DELETE',
+            });
+
+            if(response.ok){
+                alert('Deleted');
+                location.reload();
+            }
+        }
+    </script>
 </body>
 </html>
